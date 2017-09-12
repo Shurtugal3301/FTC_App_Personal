@@ -26,7 +26,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Vuforia;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -65,7 +65,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link /ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name = "Concept: VuMark Id", group = "Concept")
+@Autonomous(name = "VuMark Id: Single Object Tracking", group = "Vuforia")
 public class Vuforia extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";

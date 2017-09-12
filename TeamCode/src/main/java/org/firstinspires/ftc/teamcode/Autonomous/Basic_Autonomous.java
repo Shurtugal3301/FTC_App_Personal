@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import static org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity.TeamColor;
+import org.firstinspires.ftc.teamcode.Autonomous.AutoClass;
+
 import static org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity.timeDelay;
 
 /**
