@@ -1,0 +1,9 @@
+
+Important
+---------
+
+- In order for the robot controller to successfully find
+  the rev expansion hub, android studio must have instant
+  run disabled
+
+- 1 rotation for a rev hex motor = 287
