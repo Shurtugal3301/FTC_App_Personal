@@ -33,8 +33,10 @@ package org.firstinspires.ftc.robotcontroller.internal;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -45,6 +47,7 @@ import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.InputType;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -52,9 +55,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.blocks.ftcrobotcontroller.BlocksActivity;
 import com.google.blocks.ftcrobotcontroller.ProgrammingModeActivity;
@@ -153,6 +158,10 @@ public class FtcRobotControllerActivity extends Activity
 
   protected FtcEventLoop eventLoop;
   protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
+
+    public static String TeamColor = "";
+
+    public static int timeDelay = 0;
 
   protected class RobotRestarter implements Restarter {
 
@@ -304,7 +313,74 @@ public class FtcRobotControllerActivity extends Activity
     ServiceController.startService(FtcRobotControllerWatchdogService.class);
     bindToService();
     logPackageVersions();
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(FtcRobotControllerActivity.this);
+    final AlertDialog.Builder builder2 = new AlertDialog.Builder(FtcRobotControllerActivity.this);
+
+    // Add the buttons
+    builder.setPositiveButton("Red", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int id) {
+        // User clicked Red Team button
+        setGlobalVariable("Red", builder2);
+      }
+    });
+
+    builder.setNegativeButton("Blue", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int id) {
+        // User clicked Blue Team dialog
+        setGlobalVariable("Blue", builder2);
+      }
+    });
+
+    builder.setTitle("Select Team Color:");
+    builder.setCancelable(false);
+
+    // Create the AlertDialog
+    AlertDialog dialog = builder.create();
+    dialog.show();
+
+    // Add the delay time selection
+    builder2.setTitle("Select Delay Time:");
+    builder2.setCancelable(false);
+    final EditText delayInput = new EditText(this);
+    delayInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+    delayInput.setRawInputType(Configuration.KEYBOARD_12KEY);
+    builder2.setView(delayInput);
+
+    builder2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        int globalDelay = Integer.valueOf(delayInput.getText().toString());
+        setGlobalDelay(globalDelay);
+      }
+    });
+
   }
+
+    public void setGlobalVariable(String newColor, AlertDialog.Builder builderDelay) {
+
+      TeamColor = newColor;
+
+      Context context = getApplicationContext();
+      CharSequence text = "Thanks! Team Color set to: " + TeamColor;
+      int duration = Toast.LENGTH_SHORT;
+
+      Toast toast = Toast.makeText(context, text, duration);
+      toast.show();
+
+      builderDelay.show();
+    }
+
+    public void setGlobalDelay(int newDelay) {
+
+      timeDelay = newDelay;
+
+      Context context = getApplicationContext();
+      CharSequence text = "All Done! Delay Time set to: " + timeDelay + " seconds";
+      int duration = Toast.LENGTH_LONG;
+
+      Toast toast = Toast.makeText(context, text, duration);
+      toast.show();
+    }
 
   protected UpdateUI createUpdateUI() {
     Restarter restarter = new RobotRestarter();
